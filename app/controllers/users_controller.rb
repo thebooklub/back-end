@@ -1,19 +1,51 @@
 class UsersController < ApplicationController
-    def index
-        users = User.all
+    before_action :authorized, only: [:auto_login]
 
-        render json: users
+  # REGISTER
+  def create
+    @user = User.create(user_params)
+    if @user.valid?
+      token = encode_token({user_id: @user.id})
+      render json: {user: @user, token: token}
+    else
+      render json: {error: "Invalid username or password"}
     end
+  end
 
-    def show
-        user = User.find(params[:id])
+  # LOGGING IN
+  def login
+    @user = User.find_by(username: params[:username])
 
-        render json: user
+
+    if @user && @user.authenticate(params[:password])
+      token = encode_token({user_id: @user.id})
+      render json: {user: @user, token: token}
+    else
+      render json: {error: "Invalid username or password"}
     end
+  end
 
-    private
 
-    def user_params
-        params.permit(:id)
-    end
+  def auto_login
+    render json: @user
+  end
+  
+  def index
+      users = User.all
+
+      render json: users
+  end
+
+  def show
+      user = User.find(params[:id])
+
+      render json: user
+  end
+
+  private
+
+  def user_params
+    params.permit(:name, :username, :password, :age, :favorite_books, :location, :description, :image_url, :user)
+  end
+
 end
