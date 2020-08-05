@@ -14,7 +14,8 @@ class UsersController < ApplicationController
 
   # LOGGING IN
   def login
-    @user = User.find_by(user_name: params[:user_name])
+    @user = User.find_by(username: params[:username])
+
 
     if @user && @user.authenticate(params[:password])
       token = encode_token({user_id: @user.id})
@@ -44,7 +45,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:name, :user_name, :password, :age, :favorite_books, :location, :description, :image_url)
+    params.permit(:name, :username, :password, :age, :favorite_books, :location, :description, :image_url, :user)
   end
 
 end
