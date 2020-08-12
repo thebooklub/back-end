@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
     before_action :authorized
+    serialization_scope :logged_in_user
 
   def encode_token(payload)
     JWT.encode(payload, 's3cr3t')

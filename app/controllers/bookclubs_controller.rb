@@ -13,8 +13,9 @@ class BookclubsController < ApplicationController
     end
 
     def create
-        bookclub = Bookclub.find_or_create_by(bookclub_params)
-        BookclubUser.create(bookclub_id: bookclub.id, user_id: @user.id)
+        bookclub = Bookclub.find_or_create_by(book_id: bookclub_params[:book_id])
+        bookclub.update(name: bookclub_params[:name])
+        BookclubUser.find_or_create_by(bookclub_id: bookclub.id, user_id: @user.id)
 
         render json: bookclub
     end
