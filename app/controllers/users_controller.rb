@@ -42,10 +42,18 @@ class UsersController < ApplicationController
       render json: user
   end
 
+  def update
+    user = User.find(params[:id])
+    # fill dis in w/ what you wanna update
+    user.update(user_params)
+
+    render json: user
+  end
+
   private
 
   def user_params
-    params.permit(:name, :username, :password, :age, :favorite_books, :location, :description, :image_url, :user)
+    params.permit(:name, :username, :password, :age, :favorite_books, :location, :description, :image_url, :user, :id)
   end
 
 end
