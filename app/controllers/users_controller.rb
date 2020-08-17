@@ -3,7 +3,9 @@ class UsersController < ApplicationController
 
   # REGISTER
   def create
-    @user = User.create(user_params)
+    # byebug
+    image = Cloudinary::Uploader.upload(user_params[:image_url])
+    @user = User.create(name: user_params[:name], username: user_params[:username], password: user_params[:password], age: user_params[:age], description: user_params[:description], favorite_books: user_params[:favorite_books], location: user_params[:location], image_url: image["url"])
     if @user.valid?
       token = encode_token({user_id: @user.id})
       render json: {user: @user, token: token}
@@ -44,6 +46,8 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
+    # image = Cloudinary::Uploader.upload(user_params[:image_url])
+    # user = User.update(name: user_params[:name], username: user_params[:username], age: user_params[:age], description: user_params[:description], favorite_books: user_params[:favorite_books], location: user_params[:location], image_url: image["url"])
     # fill dis in w/ what you wanna update
     user.update(user_params)
 
@@ -53,7 +57,11 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:name, :username, :password, :age, :favorite_books, :location, :description, :image_url, :user, :id)
+    params.permit(:name, :username, :password, :age, :favorite_books, :location, :description, :user, :id, :image_url)
   end
+
+  # def image_params
+  #   params.permit(:image_url)
+  # end
 
 end
