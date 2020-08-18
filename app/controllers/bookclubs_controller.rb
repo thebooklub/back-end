@@ -13,7 +13,8 @@ class BookclubsController < ApplicationController
     end
 
     def create
-        bookclub = Bookclub.find_or_create_by(book_id: bookclub_params[:book_id])
+        book = Book.find_or_create_by(id: bookclub_params[:book_id])
+        bookclub = Bookclub.find_or_create_by(book_id: book.id)
         bookclub.update(name: bookclub_params[:name])
         BookclubUser.find_or_create_by(bookclub_id: bookclub.id, user_id: @user.id)
 
@@ -23,7 +24,7 @@ class BookclubsController < ApplicationController
     private
 
     def bookclub_params
-        params.permit(:id, :book_id, :name)
+        params.permit(:id, :book_id, :name, :bookclub)
     end
 
 end

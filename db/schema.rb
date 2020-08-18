@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_08_04_141650) do
 
   create_table "bookclubs", force: :cascade do |t|
     t.string "name"
-    t.integer "book_id"
+    t.bigint "book_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
