@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
 
     def create
         comment = Comment.create(user_id: @user.id, bookclub_id: comment_params["bookclub_id"], content: comment_params["content"])
+        booklub = Bookclub.find_by(id: comment_params["bookclub_id"])
+        CommentChannel.broadcast_to booklub, CommentSerializer.new(comment)
 
         render json: comment
     end
