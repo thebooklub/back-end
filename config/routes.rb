@@ -7,5 +7,7 @@ Rails.application.routes.draw do
   resources :comments
   resources :bookclubs
   resources :books
+
+  get "/messages/get_messages/:id", to: "messages#get_messages"
   mount ActionCable.server => "/cable"
 end

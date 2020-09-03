@@ -46,6 +46,10 @@ Comment.create(content: "we gonna be so much happier bc of this", user_id: senad
 Comment.create(content: "yesh we will", user_id: bashir.id, bookclub_id: bookclub3.id)
 Comment.create(content: "i guess i'm the only stoic", user_id: senada.id, bookclub_id: bookclub4.id)
 
+Message.create(content: "Hey wanna read with me?", sender_id: senada.id, recipient_id: bashir.id)
+Message.create(content: "No", sender_id: bashir.id, recipient_id: senada.id)
+Message.create(content: "Wow ok", sender_id: senada.id, recipient_id: bashir.id)
+
 puts "~~~~~~~~~~~~~~~~"
 puts "~~~~~SEEDED~~~~~"
 puts "~~~~~~~~~~~~~~~~"
